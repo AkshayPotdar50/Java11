@@ -8,14 +8,85 @@ import java.util.stream.IntStream;
 public class Sample2 {
     public static void main(String[] args) {
 
+        //*********INTERMEDIATE OPERATIONS*************//
+
+        //filter:filter elemenet based on given predicate
+        List<Integer> numbers= Arrays.asList(1, 2, 3, 4, 5);
+        List<Integer> evenNumbers=numbers.stream().filter(i->i%2==0).toList();
+
+        //map:transform each element using a function
+        List<String> names2=Arrays.asList("john", "jane", "jack");
+       List<Integer> namesLength= names2.stream().map(String::length).toList();
+
+       //flatmap:transforn each element into stream and flattens it
+        List<List<String>> namesNested=Arrays.asList(Arrays.asList("john", "jane"),
+                Arrays.asList("jack", "jimmy"));
+        List<String> namesFlat=namesNested.stream().flatMap(List::stream).toList();
+
+        //distinct :used to remove duplicate elements
+        List<Integer> numbers3=Arrays.asList(1, 2, 2, 3, 3, 1, 4, 5, 5);
+        List<Integer> uniqueNumbers=numbers3.stream().distinct().collect(Collectors.toList());
+
+        //sorted
+        List<Integer> sorted1Ascending= numbers3.stream().sorted().collect(Collectors.toList());
+        List<Integer> sortedDescendibg=numbers3.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
+
+        List<String> words= Arrays.asList("akshay", "bob", "carry", "dom", "elwish");
+      List<String> byLength=  words.stream().sorted(Comparator.comparingInt(String::length).reversed()).collect(Collectors.toList());
+
+
+        //sorting map
+        Map<String, Integer> scores = new HashMap<>();
+        scores.put("Alice", 90);
+        scores.put("Bob", 75);
+        scores.put("Charlie", 85);
+
+        List<Map.Entry<String, Integer>> sortedScores = new ArrayList<>(scores.entrySet());
+        sortedScores.sort(Map.Entry.comparingByValue());
+
+        System.out.println(sortedScores);
+
+
+
+        //peek:peek is only used for inspection and debugging purpose
+        List<String> result= words.stream().peek(System.out::println).collect(Collectors.toList());
+
+
+        //limlit: limit the stream to certain number of elements
+        List<Integer> firstThreeLargest=numbers3.stream().sorted(Comparator.reverseOrder()).limit(3).collect(Collectors.toList());
+         List<Integer> firstThreeSmallest=numbers3.stream().sorted().limit(3).collect(Collectors.toList());
+
+
+         //skip:skips first n elements
+        Integer ThirdLrgest=numbers3.stream().sorted(Comparator.reverseOrder()).limit(3).skip(2).findFirst().get();
+        Integer thirdSmallest=numbers3.stream().sorted().limit(3).skip(2).findFirst().get();
+
+
+        //*************TERMINAL OPERATIONS************//
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         //use cases of Collectors.joining()
-        List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
+       /* List<String> names = Arrays.asList("Alice", "Bob", "Charlie");
         String result= String.join(" ,", names);
         String result2=names.stream().collect(Collectors.joining(",", "Names:[",""));
 
         List<Character> chars=Arrays.asList('J', 'A', 'V', 'A');
         String result3=chars.stream().map(String::valueOf).collect(Collectors.joining());
-
+                 */
 
 
 
@@ -174,6 +245,8 @@ public class Sample2 {
                 .filter(word -> !word.isEmpty() && word.charAt(0) == targetLetter)
                 .findFirst();
     }
+
+
 
 
 
